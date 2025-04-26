@@ -34,7 +34,7 @@ jobs:
         working-directory: frontend
 
       - name: Build Windows executable
-        run: flutter build windows
+        run: flutter build windows --target=lib/main.dart
         working-directory: frontend
 
       - name: Zip Windows build
