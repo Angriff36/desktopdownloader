@@ -1,0 +1,34 @@
+name: Build Flutter Desktop App
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.22.0' # or latest stable
+
+    - name: Install dependencies
+      run: flutter pub get
+      working-directory: frontend
+
+    - name: Build Windows executable
+      run: flutter build windows
+      working-directory: frontend
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-build
+        path: frontend/build/windows/runner/Release/
