@@ -24,31 +24,31 @@ jobs:
         with:
           path: |
             ~/.pub-cache
-            frontend/.dart_tool
-          key: ${{ runner.os }}-flutter-${{ hashFiles('frontend/pubspec.yaml') }}
+            desktopdownloader/frontend/.dart_tool
+          key: ${{ runner.os }}-flutter-${{ hashFiles('desktopdownloader/frontend/pubspec.yaml') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
       - name: Install dependencies
         run: flutter pub get
-        working-directory: frontend
+        working-directory: desktopdownloader/frontend
 
       - name: List files in lib (PowerShell syntax)
         run: Get-ChildItem lib -Recurse
-        working-directory: frontend
+        working-directory: desktopdownloader/frontend
 
       - name: Build Windows executable
         run: flutter build windows --target=lib/main.dart
-        working-directory: frontend
+        working-directory: desktopdownloader/frontend
 
       - name: Zip Windows build
         run: |
           Compress-Archive -Path build/windows/runner/Release/* -DestinationPath build/windows/runner/x_video_downloader_windows.zip
-        working-directory: frontend
+        working-directory: desktopdownloader/frontend
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: frontend/build/windows/runner/x_video_downloader_windows.zip
+          files: desktopdownloader/frontend/build/windows/runner/x_video_downloader_windows.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
