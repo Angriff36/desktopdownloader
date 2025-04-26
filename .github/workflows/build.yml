@@ -19,16 +19,31 @@ jobs:
         with:
           flutter-version: '3.29.3'
 
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            frontend/.dart_tool
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+
       - name: Install dependencies
         run: flutter pub get
         working-directory: frontend
 
       - name: Build Windows executable
-        run: flutter build windows --target=lib/main.dart
+        run: flutter build windows
         working-directory: frontend
 
-      - name: Upload Windows Build
-        uses: actions/upload-artifact@v4
+      - name: Zip Windows build
+        run: |
+          Compress-Archive -Path frontend\build\windows\runner\Release\* -DestinationPath frontend\build\windows\runner\x_video_downloader_windows.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: x_video_downloader_windows
-          path: frontend/build/windows/runner/Release/
+          files: frontend/build/windows/runner/x_video_downloader_windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
