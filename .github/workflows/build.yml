@@ -33,8 +33,8 @@ jobs:
         run: flutter pub get
         working-directory: frontend
 
-      - name: List files in lib
-        run: dir /s lib
+      - name: List files in lib (PowerShell syntax)
+        run: Get-ChildItem lib -Recurse
         working-directory: frontend
 
       - name: Build Windows executable
