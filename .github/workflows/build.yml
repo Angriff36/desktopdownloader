@@ -27,8 +27,8 @@ jobs:
       run: flutter build windows
       working-directory: frontend
 
-    - name: Upload build artifacts
+    - name: Upload Windows Build
       uses: actions/upload-artifact@v4
       with:
-        name: windows-build
+        name: x_video_downloader_windows
         path: frontend/build/windows/runner/Release/
