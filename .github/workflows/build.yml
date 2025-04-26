@@ -33,6 +33,9 @@ jobs:
         run: flutter pub get
         working-directory: frontend
 
+      - name: List files in frontend/lib
+        run: dir /s frontend\lib
+
       - name: Build Windows executable
         run: flutter build windows --target=frontend/lib/main.dart
         working-directory: frontend
