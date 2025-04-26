@@ -11,24 +11,24 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.29.3'
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.3'
 
-    - name: Install dependencies
-      run: flutter pub get
-      working-directory: frontend
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: frontend
 
-    - name: Build Windows executable
-      run: flutter build windows
-      working-directory: frontend
+      - name: Build Windows executable
+        run: flutter build windows --target=lib/main.dart
+        working-directory: frontend
 
-    - name: Upload Windows Build
-      uses: actions/upload-artifact@v4
-      with:
-        name: x_video_downloader_windows
-        path: frontend/build/windows/runner/Release/
+      - name: Upload Windows Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: x_video_downloader_windows
+          path: frontend/build/windows/runner/Release/
