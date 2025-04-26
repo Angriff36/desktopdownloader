@@ -25,7 +25,7 @@ jobs:
           path: |
             ~/.pub-cache
             frontend/.dart_tool
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('frontend/pubspec.yaml') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
@@ -33,7 +33,7 @@ jobs:
         run: flutter pub get
         working-directory: frontend
 
-      - name: List files in frontend/lib
+      - name: List files in lib
         run: dir /s lib
         working-directory: frontend
 
@@ -43,7 +43,7 @@ jobs:
 
       - name: Zip Windows build
         run: |
-          Compress-Archive -Path build\windows\runner\Release\* -DestinationPath build\windows\runner\x_video_downloader_windows.zip
+          Compress-Archive -Path build/windows/runner/Release/* -DestinationPath build/windows/runner/x_video_downloader_windows.zip
         working-directory: frontend
 
       - name: Create GitHub Release
