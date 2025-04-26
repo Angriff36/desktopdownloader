@@ -34,15 +34,17 @@ jobs:
         working-directory: frontend
 
       - name: List files in frontend/lib
-        run: dir /s "frontend\lib"
+        run: dir /s lib
+        working-directory: frontend
 
       - name: Build Windows executable
-        run: flutter build windows --target=frontend/lib/main.dart
+        run: flutter build windows --target=lib/main.dart
         working-directory: frontend
 
       - name: Zip Windows build
         run: |
-          Compress-Archive -Path frontend\build\windows\runner\Release\* -DestinationPath frontend\build\windows\runner\x_video_downloader_windows.zip
+          Compress-Archive -Path build\windows\runner\Release\* -DestinationPath build\windows\runner\x_video_downloader_windows.zip
+        working-directory: frontend
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
